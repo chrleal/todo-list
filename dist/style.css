@@ -1,0 +1,36 @@
+*{
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body{
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 6fr;
+}
+
+/* sidebar */
+aside{
+  background-color: aqua;
+}
+
+.sidebar-item{
+  padding: 20px 20px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.sidebar-item-content{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.sidebar-item-content:hover{
+  background-color: rgba(0,0,0, 0.5)
+}
