@@ -1,25 +1,35 @@
 const dom = (() => {
-  
+  const modalOverlay = document.querySelector('.modal-overlay');
+  const modal = document.querySelector('.modal');
+  const form = document.querySelector('#form');
+
   (function toggleModal(){
-    const addButton = document.querySelector('.add-button')
-    addButton.addEventListener('click', () => {
-      const modal = document.querySelector('.modal');
-      modal.style.display = 'block';
-    })
-    if (toggleModal){
+      showModal();
+    if (showModal){
       closeModal();
     }
   })();
   
+  function showModal(){
+    const addButton = document.querySelector('.add-button')
+    addButton.addEventListener('click', () => {
+      modal.style.display = 'flex';
+      modalOverlay.style.display = 'block';
+    })
+  }
+
   function closeModal() {
-    const modal = document.querySelector('.modal');
-    modal.addEventListener('click', () => {
+    modalOverlay.addEventListener('click', () => {
       modal.style.display = 'none';
+      modalOverlay.style.display = 'none';
+      form.reset();
     })
   
     const closeButton = document.querySelector('.close');
     closeButton.addEventListener('click', () => {
       modal.style.display = 'none';
+      modalOverlay.style.display = 'none';
+      form.reset();
     })
   };
 
