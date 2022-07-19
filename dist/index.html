@@ -41,5 +41,39 @@
       <p>Add a new task</p>
     </div>
   </main>
+  <div class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title">New Task</h1>
+        <span class="material-icons-outlined close">close</span>
+      </div>
+      <form id="form">
+        <div>
+          <label for="title"><p>Title</p></label>
+          <input type="text" name="title" id="title">
+        </div>
+        <div>
+          <label for="description"><p>Description</p></label>
+          <textarea name="description" id="description"></textarea>
+        </div>
+        <div>
+          <label for="date"><p>Due Date</p></label>
+          <input type="date" name="date" id="date">
+        </div>
+        <div>
+          <label for="priority"><p>Priority</p></label>
+          <select name="Priority" id="priority">
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+      </form>
+      <div class="modal-footer">
+        <button class="save">Save</button>
+        <button class="cancel">Cancel</button>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
