@@ -36,9 +36,11 @@
   </aside>
   <main>
     <h1 class="title">Inbox</h1>
-    <div class="add-button">
-      <span class="material-icons-outlined">add</span>
-      <p>Add a new task</p>
+    <div class="todo-container">
+      <div class="add-button">
+        <span class="material-icons-outlined">add</span>
+        <p>Add a new task</p>
+      </div>
     </div>
   </main>
   <div class="modal-overlay"></div>
@@ -50,7 +52,7 @@
       <form id="form">
         <div>
           <label for="title"><p>Title</p></label>
-          <input type="text" name="title" id="title">
+          <input type="text" name="title" id="title" required>
         </div>
         <div>
           <label for="description"><p>Description</p></label>
@@ -63,6 +65,7 @@
         <div>
           <label for="priority"><p>Priority</p></label>
           <select name="Priority" id="priority">
+            <option value="" disabled selected>Select priority</option>
             <option value="low">Low</option>
             <option value="medium">Medium</option>
             <option value="high">High</option>
@@ -70,8 +73,8 @@
         </div>
       </form>
       <div class="modal-footer">
-        <button class="save">Save</button>
-        <button class="cancel">Cancel</button>
+        <button type="submit" id="save">Save</button>
+        <button id="cancel">Cancel</button>
       </div>
     </div>
 </body>

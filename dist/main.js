@@ -7,15 +7,16 @@
  * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
  */
 /******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "./src/dom.js":
 /*!********************!*\
   !*** ./src/dom.js ***!
   \********************/
-/***/ (() => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("const dom = (() => {\n  const modalOverlay = document.querySelector('.modal-overlay');\n  const modal = document.querySelector('.modal');\n  const form = document.querySelector('#form');\n\n  (function toggleModal(){\n      showModal();\n    if (showModal){\n      closeModal();\n    }\n  })();\n  \n  function showModal(){\n    const addButton = document.querySelector('.add-button')\n    addButton.addEventListener('click', () => {\n      modal.style.display = 'flex';\n      modalOverlay.style.display = 'block';\n    })\n  }\n\n  function closeModal() {\n    modalOverlay.addEventListener('click', () => {\n      modal.style.display = 'none';\n      modalOverlay.style.display = 'none';\n      form.reset();\n    })\n  \n    const closeButton = document.querySelector('.close');\n    closeButton.addEventListener('click', () => {\n      modal.style.display = 'none';\n      modalOverlay.style.display = 'none';\n      form.reset();\n    })\n  };\n\n})();\n\n//# sourceURL=webpack://todo-list/./src/dom.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"date\": () => (/* binding */ date),\n/* harmony export */   \"description\": () => (/* binding */ description),\n/* harmony export */   \"form\": () => (/* binding */ form),\n/* harmony export */   \"priority\": () => (/* binding */ priority),\n/* harmony export */   \"resetDisplay\": () => (/* binding */ resetDisplay),\n/* harmony export */   \"title\": () => (/* binding */ title)\n/* harmony export */ });\n/* harmony import */ var _todo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./todo */ \"./src/todo.js\");\n\n\nconst modalOverlay = document.querySelector('.modal-overlay');\nconst modal = document.querySelector('.modal');\nconst form = document.querySelector('#form');\nconst title = document.querySelector('#title');\nconst description = document.querySelector('#description');\nconst date = document.querySelector('#date');\nconst priority = document.querySelector('#priority');\nconst closeButton = document.querySelector('.close');\nconst saveBtn = document.querySelector('#save');\nconst addButton = document.querySelector('.add-button');\nconst todoContainer = document.querySelector('.todo-container');\n\nshowTask();\n\n(function toggleModal(){\n    showModal();\n  if (showModal){\n    closeModal();\n  }\n})();\n\nfunction showModal(){\n  addButton.addEventListener('click', () => {\n    modal.style.display = 'flex';\n    modalOverlay.style.display = 'block';\n  })\n}\n\nfunction closeModal(){\n  modalOverlay.addEventListener('click', resetDisplay);\n  closeButton.addEventListener('click', resetDisplay);\n}\n\nfunction resetDisplay() {\n  modal.style.display = 'none';\n  modalOverlay.style.display = 'none';\n  form.reset();\n}\n\n(function submitForm(){\n  saveBtn.addEventListener('click', () => {\n    _todo__WEBPACK_IMPORTED_MODULE_0__.validateInput();\n    removeAll();\n    showTask();\n  })\n})();\n\nfunction showTask(){\n  _todo__WEBPACK_IMPORTED_MODULE_0__.myTasks.forEach((task) => {\n    const taskContainer = document.createElement('div');\n    taskContainer.setAttribute('class', 'task')\n    todoContainer.insertBefore(taskContainer, addButton);\n\n    const taskCheck = document.createElement('input');\n    taskContainer.appendChild(taskCheck);\n    taskCheck.setAttribute('type', 'checkbox');\n  \n    const taskTitle = document.createElement('h2');\n    taskContainer.appendChild(taskTitle);\n    taskTitle.textContent = task.title;\n  })\n}\n\nfunction removeAll(){\n  const removeDiv = todoContainer.querySelectorAll('.task');\n  removeDiv.forEach(div => div.remove());\n}\n\n\n\n//# sourceURL=webpack://todo-list/./src/dom.js?");
 
 /***/ }),
 
@@ -25,8 +26,7 @@ eval("const dom = (() => {\n  const modalOverlay = document.querySelector('.moda
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _todo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./todo */ \"./src/todo.js\");\n/* harmony import */ var _todo__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_todo__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dom */ \"./src/dom.js\");\n/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_dom__WEBPACK_IMPORTED_MODULE_1__);\nconsole.log('ok!')\n;\n\n\n\n//# sourceURL=webpack://todo-list/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dom */ \"./src/dom.js\");\n/* harmony import */ var _todo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./todo */ \"./src/todo.js\");\n\n\n\nconsole.log('ok!')\n\n\n\n//# sourceURL=webpack://todo-list/./src/index.js?");
 
 /***/ }),
 
@@ -34,9 +34,9 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _tod
 /*!*********************!*\
   !*** ./src/todo.js ***!
   \*********************/
-/***/ (() => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("const todoList = (() => {\n\n  //Add new task\n  function createTask(){\n\n  }\n\n})();\n\n//# sourceURL=webpack://todo-list/./src/todo.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"myTasks\": () => (/* binding */ myTasks),\n/* harmony export */   \"validateInput\": () => (/* binding */ validateInput)\n/* harmony export */ });\n/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dom */ \"./src/dom.js\");\n\n\nconst myTasks = [];\n\nconst taskFactory = (title, description, date, priority) => {\n  return {title, description, date, priority}\n}\n\nfunction validateInput() {\n  if (_dom__WEBPACK_IMPORTED_MODULE_0__.title.value != \"\"){\n    submitTask();\n    console.log(myTasks);\n    _dom__WEBPACK_IMPORTED_MODULE_0__.resetDisplay();\n  } else {\n    _dom__WEBPACK_IMPORTED_MODULE_0__.title.reportValidity();\n  }\n}\n\n//Add new task\nfunction submitTask(){\n  const newTask = taskFactory(_dom__WEBPACK_IMPORTED_MODULE_0__.title.value, _dom__WEBPACK_IMPORTED_MODULE_0__.description.value, _dom__WEBPACK_IMPORTED_MODULE_0__.date.value, _dom__WEBPACK_IMPORTED_MODULE_0__.priority.value);\n  myTasks.push(newTask);\n}\n\nconst task = taskFactory('test', 'test', '19/07/22', 'high');\nmyTasks.push(task);\nconsole.log(myTasks);\n\n\n\n//# sourceURL=webpack://todo-list/./src/todo.js?");
 
 /***/ })
 
@@ -67,18 +67,6 @@ eval("const todoList = (() => {\n\n  //Add new task\n  function createTask(){\n\
 /******/ 	}
 /******/ 	
 /************************************************************************/
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports

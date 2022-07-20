@@ -1,3 +1,5 @@
-console.log('ok!')
+import * as dom from "./dom";
 import * as todo from "./todo";
-import * as dom from "./dom"
+
+console.log('ok!')
+
