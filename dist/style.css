@@ -22,7 +22,7 @@ aside{
   font-size: 18px;
 }
 
-aside span, p{
+.sidebar-item span, p{
   pointer-events: none;
 }
 
@@ -34,7 +34,7 @@ aside span, p{
   width: 100%;
 }
 
-.sidebar-item-content, .sidebar-project-content{
+.sidebar-item-content, .sidebar-project-content, .sidebar-project-button{
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -46,6 +46,12 @@ aside span, p{
   gap: 20px;
 }
 
+.sidebar-project-button{
+  cursor:initial;
+  justify-content: space-between;
+  border-radius: 0;
+  border-bottom: 1px solid black;
+}
 .sidebar-project-content{
   justify-content: space-between;
   gap: 20px;
@@ -54,7 +60,12 @@ aside span, p{
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
-.sidebar-item-content:hover, .sidebar-project-content:hover{
+#add-project{
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.sidebar-item-content:hover, .sidebar-project-content:hover, #add-project:hover{
   background-color: rgba(255,255,255, 0.5)
 }
 

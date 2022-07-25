@@ -1,6 +1,8 @@
 import * as todo from "./todo";
+import { differenceInDays , isToday} from 'date-fns';
 
 let indexTask;
+let filteredTasks;
 const modalOverlay = document.querySelector('.modal-overlay');
 const modal = document.querySelector('.modal-todo');
 const modalTitle = document.querySelector('.modal-title');
@@ -15,7 +17,7 @@ const closeButton = document.querySelector('.close');
 const saveEditBtn = document.querySelector('#save-edit-button');
 const addButton = document.querySelector('.add-button');
 const todoContainer = document.querySelector('.todo-container');
-const projectBtn = document.querySelector('#project-button');
+const projectBtn = document.querySelector('#add-project');
 const projectContainer = document.querySelector('.sidebar-project');
 const heading = document.querySelector('.heading');
 const sidebarBtns = document.querySelectorAll('.sidebar-item-content');
@@ -25,15 +27,41 @@ const sidebarBtns = document.querySelectorAll('.sidebar-item-content');
     btn.addEventListener('click', (e) => {
       heading.textContent = btn.querySelector('p').textContent;
       removeAllTasks();
-      showTask();
+      showTask(todo.myTasks);
       addButton.style.display = 'flex';
-      if (e.target.id != 'inbox'){
-        addButton.style.display = 'none';
-        removeAllTasks();
-        showTask();
-        // if (e.target.id == today){
-          
-        // }
+      saveEditBtn.removeAttribute('class');
+      saveEditBtn.classList.add('save-inbox-task');
+      switch (e.target.id){
+        case 'today':
+          filteredTasks = todo.myTasks.filter(task => isToday(new Date(task.date.replace(/-/g, '\/'))));
+          console.log('click');
+          removeAllTasks();
+          showTask(filteredTasks);
+          addButton.style.display = 'none';
+          break;
+        case 'upcoming':
+          filteredTasks = todo.myTasks.filter(task => {
+            const totalDays = differenceInDays(new Date(task.date.replace(/-/g, '\/')), new Date());
+            if (totalDays >= 0 && totalDays <= 6){
+              return task
+            }
+          })
+          removeAllTasks();
+          showTask(filteredTasks);
+          addButton.style.display = 'none';
+          break;
+        case 'important':
+          filteredTasks = todo.myTasks.filter(task => (task.priority == 'high'));
+          removeAllTasks();
+          showTask(filteredTasks);
+          addButton.style.display = 'none';
+          break;
+        case 'completed':
+          filteredTasks = todo.myTasks.filter(task => (task.checkbox == 'checked'));
+          removeAllTasks();
+          showTask(filteredTasks);
+          addButton.style.display = 'none';
+          break;
       }
     })
   })
@@ -52,9 +80,6 @@ function showModal(){
     modalOverlay.style.display = 'block';
     modalTitle.textContent = "New Task";
     saveEditBtn.textContent = "Save";
-    saveEditBtn.classList.remove('save-project');
-    saveEditBtn.classList.remove('edit');
-    saveEditBtn.classList.add('save');
     form.style.display = 'block';
     formProject.style.display = 'none';
   })
@@ -64,8 +89,7 @@ function showModal(){
     modalOverlay.style.display = 'block';
     modalTitle.textContent = "New Project";
     saveEditBtn.textContent = "Save";
-    saveEditBtn.classList.remove('edit');
-    saveEditBtn.classList.remove('save');
+    saveEditBtn.removeAttribute('class');
     saveEditBtn.classList.add('save-project');
     form.style.display = 'none';
     formProject.style.display = 'block';
@@ -86,22 +110,27 @@ function resetDisplay() {
 
 (function submitForm(){
   saveEditBtn.addEventListener('click', () => {
-    if (saveEditBtn.classList.contains('save')){
+    if (saveEditBtn.classList.contains('save-inbox-task')){
       todo.submitTask();
       removeAllTasks();
-      showTask();
-      console.log(todo.myTasks);
-    } else if (saveEditBtn.classList.contains('edit')){
-      todo.editTask(indexTask);
+      showTask(todo.myTasks);
+      console.log(saveEditBtn.className, todo.myTasks);
+    } else if (saveEditBtn.classList.contains('save-project-task')){
+      todo.submitTask();
       removeAllTasks();
-      showTask();
-      console.log(todo.myTasks);
+      showTask(todo.myProjects.find(item => item.title == heading.textContent).tasks);
+      console.log(todo.myTasks, todo.myProjects);
     } else if (saveEditBtn.classList.contains('save-project')){
       todo.submitProject();
-      removeAllProjects()
+      removeAllProjects();
       showProject();
-      console.log(todo.myProjects)
-    }
+      console.log(saveEditBtn.className, todo.myProjects);
+    } else if (saveEditBtn.classList.contains('edit-task')){
+      todo.editTask(indexTask);
+      removeAllTasks();
+      showTask(todo.myTasks);
+      console.log(saveEditBtn.className, todo.myTasks);
+    } 
   })
 })();
 
@@ -113,17 +142,25 @@ function showProject(){
     newProject.textContent = project.title;
     projectContainer.appendChild(newProject);
     newProject.addEventListener('click', () => {
-      addButton.style.display = 'flex';
       removeAllTasks();
+      filteredTasks = todo.myTasks.filter(task => (task.project == project.title));
+      addButton.style.display = 'flex';
       heading.textContent = project.title;
-      showTask();
+      showTask(filteredTasks);
+      // console.log('showproject', filteredTasks, todo.myTasks);
+      saveEditBtn.removeAttribute('class');
+      saveEditBtn.classList.add('save-project-task');
     })
   })
 }
 
-function showTask(){
-  todo.myTasks.forEach((task, index) => {
-    if (task.project == heading.textContent){
+(function projectEventHandler(){
+  
+})();
+
+function showTask(tasks){
+  if (tasks) {
+    tasks.forEach((task, index) => {
       const taskContainer = document.createElement('div');
       taskContainer.setAttribute('class', 'task-container')
       taskContainer.setAttribute('data-id', `${index}`)
@@ -132,6 +169,24 @@ function showTask(){
       const taskCheck = document.createElement('input');
       taskContainer.appendChild(taskCheck);
       taskCheck.setAttribute('type', 'checkbox');
+
+      if (task.checkbox == 'unchecked'){
+        taskCheck.removeAttribute('checked', true);
+      } else {
+        taskCheck.setAttribute('checked', true);
+      }
+
+      taskCheck.addEventListener('click', () => {
+        if (task.checkbox == 'unchecked'){
+          taskCheck.removeAttribute('checked', false);
+          taskCheck.setAttribute('checked', true);
+          task.checkbox = 'checked';
+        } else {
+          taskCheck.removeAttribute('checked', true);
+          taskCheck.setAttribute('checked', false);
+          task.checkbox = 'unchecked';
+        }
+      })
 
       const taskTitle = document.createElement('h2');
       taskTitle.classList.add('task-title');
@@ -149,9 +204,8 @@ function showTask(){
         modalOverlay.style.display = 'block';
         modalTitle.textContent = "Edit Task";
         saveEditBtn.textContent = "Edit";
-        saveEditBtn.classList.remove('save-project');
-        saveEditBtn.classList.remove('save');
-        saveEditBtn.classList.add('edit');
+        saveEditBtn.removeAttribute('class');
+        saveEditBtn.classList.add('edit-task');
         editModal(task.title, task.description, task.date, task.priority);
       })
 
@@ -165,8 +219,8 @@ function showTask(){
         todoContainer.removeChild(taskContainer);
         todo.deleteTask(task);
       })
-    }
-  })
+    })
+  }
 }
 
 function editModal(titleEdit, descriptionEdit, dateEdit, priorityEdit) {
@@ -186,4 +240,4 @@ function removeAllProjects(){
   removeProject.forEach(div => div.remove());
 }
 
-export {heading, title, titleProject, description, date, priority, showTask, resetDisplay}
+export {heading, saveEditBtn, title, titleProject, description, date, priority, showTask, resetDisplay}
